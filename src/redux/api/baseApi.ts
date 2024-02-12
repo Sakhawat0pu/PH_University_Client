@@ -28,6 +28,15 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 	DefinitionType
 > = async (args, api, extraPoints): Promise<any> => {
 	let result = await baseQuery(args, api, extraPoints);
+
+	if (result?.error?.status === 403) {
+		toast.error(result?.error?.data?.message, { duration: 3000 });
+	}
+
+	if (result?.error?.status === 400) {
+		toast.error(result?.error?.data?.message, { duration: 3000 });
+	}
+
 	if (result?.error?.status === 404) {
 		toast.error(result?.error?.data?.message, { duration: 3000 });
 	}
@@ -61,6 +70,11 @@ export const baseApi = createApi({
 		"Academic Faculty",
 		"Academic Department",
 		"Student",
+		"Registered Semester",
+		"Course",
+		"Offered Courses",
+		"My offered Courses",
+		"Faculty Courses",
 	],
 	baseQuery: baseQueryWithRefreshToken,
 	endpoints: () => ({}),

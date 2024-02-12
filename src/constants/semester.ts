@@ -9,3 +9,9 @@ export const yearOptions = [0, 1, 2, 3, 4, 5].map((num) => ({
 	value: String(num + currentYear),
 	label: String(num + currentYear),
 }));
+
+export const semesterStatusOptions = [
+	{ label: "Upcoming", value: "Upcoming" },
+	{ label: "Ongoing", value: "Ongoing" },
+	{ label: "Ended", value: "Ended" },
+];

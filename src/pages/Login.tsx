@@ -15,8 +15,8 @@ const Login = () => {
 	let uri = location?.state?.from?.pathname || "/";
 
 	const defaultValues = {
-		id: "A-0002",
-		password: "myStrongSecretPassword",
+		id: "F-0003",
+		password: "12345",
 	};
 
 	const [login] = useLoginMutation();
@@ -28,7 +28,10 @@ const Login = () => {
 			const res = await login(data).unwrap();
 			const user = verifyToken(res.data.accessToken) as TUser;
 			dispatch(setUser({ user, token: res.data.accessToken }));
-			if (uri === "/") {
+
+			if (res?.data?.needsPasswordChange) {
+				uri = "/change-password";
+			} else if (uri === "/") {
 				uri = `/${user.role}/dashboard`;
 			}
 			toast.success("Logged in", { id: toastId, duration: 2000 }); //* previous toaster will be replaced

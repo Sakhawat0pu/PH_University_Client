@@ -1,5 +1,6 @@
 import { Form, Select } from "antd";
-import { Controller } from "react-hook-form";
+import { useEffect } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 type TOptions = {
 	value: string;
@@ -13,15 +14,26 @@ type TSelectProp = {
 	options: TOptions[] | undefined;
 	disabled?: boolean;
 	mode?: "multiple" | undefined;
+	handleValueChange: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const WrapperSelect = ({
+const WrapperSelectWithWatch = ({
 	label,
 	name,
 	options,
 	disabled,
 	mode,
+	handleValueChange,
 }: TSelectProp) => {
+	const { control } = useFormContext();
+	const inputValue = useWatch({
+		control,
+		name,
+	});
+
+	useEffect(() => {
+		handleValueChange(inputValue);
+	}, [inputValue]);
 	return (
 		<Controller
 			name={name}
@@ -46,4 +58,4 @@ const WrapperSelect = ({
 	);
 };
 
-export default WrapperSelect;
+export default WrapperSelectWithWatch;

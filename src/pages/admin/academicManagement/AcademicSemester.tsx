@@ -67,7 +67,7 @@ const AcademicSemester = () => {
 			title: "Action",
 			render: () => (
 				<div>
-					<Button>Upload</Button>
+					<Button>Update</Button>
 				</div>
 			),
 		},
